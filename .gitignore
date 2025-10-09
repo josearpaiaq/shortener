@@ -1,0 +1,11 @@
+# Workspace files
+.vscode/**
+
+# env files
+.env
+
+# Binaries for programs and plugins
+go.sum
+
+# Logs
+logs/*

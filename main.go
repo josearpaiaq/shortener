@@ -2,18 +2,27 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"net/http"
+
+	"github.com/josearpaiaq/shortener/router"
 )
 
 func main() {
-	port := "8080"
+	r := router.NewRouter()
 
-	fmt.Println("Listening on port " + port)
+	// TODO: get port from env
+	PORT := ":8080"
 
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("Hello World!"))
-	})
+	fmt.Println("")
+	fmt.Println(" 🚀 Server started on port", PORT)
+	fmt.Println("")
+	fmt.Println(" Press Ctrl+C to stop the server 👋")
+	fmt.Println("")
+	fmt.Println("----------------------------------")
+	fmt.Println("")
 
-	log.Fatal(http.ListenAndServe(":"+port, nil))
+	if err := http.ListenAndServe(PORT, r); err != nil {
+		fmt.Println("Error starting server:", err)
+		panic(err)
+	}
 }
