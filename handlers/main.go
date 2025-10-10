@@ -2,10 +2,10 @@ package handlers
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 
 	"github.com/gorilla/mux"
+	"github.com/josearpaiaq/shortener/utils"
 )
 
 type ShortenURLRequest struct {
@@ -18,27 +18,21 @@ type ShortenURLResponse struct {
 }
 
 func GetHomeRoute(w http.ResponseWriter, r *http.Request) {
+
 	w.Write([]byte("Welcome to the URL Shortener Service!"))
 }
 
 func ShortenURL(w http.ResponseWriter, r *http.Request) {
-	fmt.Print("Shorten URL endpoint")
 	w.Header().Set("Content-Type", "application/json")
+	var body ShortenURLRequest
 	var response ShortenURLResponse
-	_ = json.NewDecoder(r.Body).Decode(&response)
-	// TODO: implement shorten URL logic
-	// get original URL from request body
-	// var data ShortenURLRequest
-	// err := json.NewDecoder(r.Body).Decode(&data)
-
-	// if err != nil {
-	// 	fmt.Println("Error decoding JSON:", err)
-	// 	w.WriteHeader(http.StatusBadRequest)
-	// 	return
-	// }
-
-	// fmt.Println(data)
-
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+	response.OriginalURL = body.URL
+	originalURL := utils.GenerateShortURL(body.URL)
+	response.ShortURL = originalURL
 	json.NewEncoder(w).Encode(&response)
 }
 
