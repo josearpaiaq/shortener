@@ -1,8 +1,13 @@
 package utils
 
-/*
-ShortenURL is a function that takes a URL as input and returns a shortened URL.
-*/
-func ShortenURL(url string) string {
-	return ""
+import (
+	"fmt"
+	"hash/fnv"
+)
+
+// generateShortURL creates a shortened URL string using a hash function
+func GenerateShortURL(originalURL string) string {
+ h := fnv.New32a()
+ h.Write([]byte(originalURL))
+ return fmt.Sprintf("%x", h.Sum32())
 }
