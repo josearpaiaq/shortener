@@ -5,13 +5,17 @@ import (
 	"net/http"
 
 	"github.com/josearpaiaq/shortener/router"
+	"github.com/josearpaiaq/shortener/utils"
 )
 
 func main() {
 	r := router.NewRouter()
 
 	// TODO: get port from env
-	PORT := ":8080"
+	// PORT := os.Getenv("PORT")
+	PORT := utils.GoDotEnvVariable("PORT")
+
+	fmt.Println(PORT)
 
 	fmt.Println("")
 	fmt.Println(" 🚀 Server started on port", PORT)
