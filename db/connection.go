@@ -1,45 +1,57 @@
 package db
 
 import (
-	"database/sql"
 	"fmt"
 	"log"
 
+	"github.com/josearpaiaq/shortener/models"
 	"github.com/josearpaiaq/shortener/utils"
-	_ "github.com/lib/pq"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 )
 
-func ConnectToDB() (*sql.DB, error) {
-	dbHost := utils.GET_ENV("DB_HOST")
-	dbPort := utils.GET_ENV("DB_PORT")
-	dbUser := utils.GET_ENV("DB_USER")
-	dbPassword := utils.GET_ENV("DB_PASSWORD")
-	dbName := utils.GET_ENV("DB_NAME")
-	dbSslmode := utils.GET_ENV("DB_SSLMODE")
+var Connection *gorm.DB
+
+func ConnectToDB() (*gorm.DB, error) {
+	dbHost := utils.GET_ENV("DB_HOST", "localhost")
+	dbPort := utils.GET_ENV("DB_PORT", "5432")
+	dbUser := utils.GET_ENV("DB_USER", "postgres")
+	dbPassword := utils.GET_ENV("DB_PASSWORD", "password")
+	dbName := utils.GET_ENV("DB_NAME", "db")
+	dbSslmode := utils.GET_ENV("DB_SSLMODE", "disable")
 
 	connStr := fmt.Sprintf(
-		"postgres://%s:%s@%s:%s/%s?sslmode=%s",
-		dbUser,
-		dbPassword,
+		"host=%s port=%s user=%s password=%s dbname=%s sslmode=%s",
 		dbHost,
 		dbPort,
+		dbUser,
+		dbPassword,
 		dbName,
 		dbSslmode,
 	)
 
-	db, err := sql.Open("postgres", connStr)
+	db, err := gorm.Open(postgres.Open(connStr), &gorm.Config{})
 	
 	if err != nil {
 		log.Fatal(err)
+		return nil, err
 	}
-
-	defer db.Close()
 	
-	if err = db.Ping(); err != nil {
-		log.Println("DB Ping Failed")
-		log.Fatal(err)
-	}
 	log.Println("DB Connection started successfully")
 
+	// Assign the connection to the global variable
+	Connection = db
+
+	// Migrate the schema
+	migrateTables()
+
 	return db, nil
+}
+
+func migrateTables() error {
+	err := Connection.AutoMigrate(&models.URL{})
+	if err != nil {
+		return err
+	}
+	return nil
 }
