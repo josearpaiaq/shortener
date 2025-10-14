@@ -50,8 +50,6 @@ func RedirectToOriginalURL(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	shortUrl := vars["short_url"]
 
-	fmt.Println(shortUrl)
-
 	var url models.URL
 	// Check if the short URL exists
 	if err := db.Connection.First(&url, "short_url = ?", shortUrl).Error; err != nil {
