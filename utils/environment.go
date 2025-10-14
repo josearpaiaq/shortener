@@ -7,7 +7,7 @@ import (
 	"github.com/joho/godotenv"
 )
 
-func GET_ENV(key string) string {
+func GET_ENV(key string, defaultValue string) string {
 
   // load .env file
   err := godotenv.Load(".env")
@@ -16,5 +16,9 @@ func GET_ENV(key string) string {
     log.Fatalf("Error loading .env file")
   }
 
-  return os.Getenv(key)
+  if value, ok := os.LookupEnv(key); ok {
+    return value
+  }
+
+  return defaultValue
 }
