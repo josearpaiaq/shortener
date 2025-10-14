@@ -6,25 +6,21 @@ import (
 	"net/http"
 
 	"github.com/josearpaiaq/shortener/db"
-	"github.com/josearpaiaq/shortener/router"
+	"github.com/josearpaiaq/shortener/routes"
 	"github.com/josearpaiaq/shortener/utils"
-	_ "github.com/lib/pq"
 )
 
 func main() {
-	db, err := db.ConnectToDB()
-
-	if err != nil {
+	// Connect to the database
+	if _, err := db.ConnectToDB(); err != nil {
 		log.Fatal(err)
 	}
-
-	defer db.Close()
  
-	r := router.NewRouter()
+	// Initialize the router
+	r := routes.NewRouter()
 
-	// TODO: get port from env
-	// PORT := os.Getenv("PORT")
-	PORT := utils.GET_ENV("PORT")
+	// Get port from env
+	PORT := utils.GET_ENV("PORT", "8080")
 
 	fmt.Println(PORT)
 
