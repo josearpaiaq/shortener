@@ -45,6 +45,7 @@ func ShortenURL(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(&response)
 }
 
+// TODO: fix this function, aparently every request is being calling twice, updating the clicks twice instead of once per request
 func RedirectToOriginalURL(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	shortUrl := vars["short_url"]
@@ -78,6 +79,10 @@ func RedirectToOriginalURL(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, original, http.StatusFound)
 }
 
+// TODO: get number of clicks across all URLs and return a JSON object like this:
+// {
+//   "url": "number of clicks"
+// }
 func Stats(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	stats := models.URL{}
