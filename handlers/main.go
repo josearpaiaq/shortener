@@ -23,8 +23,7 @@ type ShortenURLResponse struct {
 }
 
 func GetHomeRoute(w http.ResponseWriter, r *http.Request) {
-
-	w.Write([]byte("Welcome to the URL Shortener Service!"))
+	http.ServeFile(w, r, "templates/index.html")
 }
 
 func ShortenURL(w http.ResponseWriter, r *http.Request) {
