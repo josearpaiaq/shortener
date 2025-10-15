@@ -14,7 +14,7 @@ services:
       - DB_NAME=${DB_NAME}
       - DB_SSLMODE=${DB_SSLMODE}
     ports:
-      - ${PORT}:8080
+      - ${PORT}:${PORT}
     depends_on:
       - db
   db:
@@ -28,7 +28,7 @@ services:
       - POSTGRES_PASSWORD=${DB_PASSWORD}
       - POSTGRES_DB=${DB_NAME}
     ports:
-      - ${DB_PORT}:5432
+      - ${DB_PORT}:${DB_PORT}
     volumes:
       - pg-data:/var/lib/postgresql/data
 
