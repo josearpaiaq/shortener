@@ -1,4 +1,4 @@
-# shortener
+# Shortener Go App
 
 A Go web app that shortens URLs.
 
