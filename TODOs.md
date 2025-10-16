@@ -2,12 +2,12 @@
 
 - Implement hot realoading with the docker-compose file
 
-  - https://docs.docker.com/compose/compose-file/compose-file-v3/#hot-reloading
-  - take advantage of air or CompileDaemon to watch for changes and restart the server
+  - [Hot reloading](https://docs.docker.com/compose/compose-file/compose-file-v3/#hot-reloading) with docker-compose
+  - take advantage of [air](github.com/cosmtrek/air@latest) or [CompileDaemon](https://github.com/githubnemo/CompileDaemon) to watch for changes and restart the server
 
 - Improve the landing page
 
-  - Add tailwindcss or something similar to make the page look better (taking in count the landing page is just a static HTML file)
+  - Add [tailwindcss](https://tailwindcss.com/) or something similar to make the page look better (taking in count the landing page is just a static HTML file)
   - Add a form to enter the URL
   - Add a button to shorten the URL
   - Display the shortened URL
@@ -17,8 +17,16 @@
 
 - Add database migrations
 
-  - https://gorm.io/docs/migration.html
+  - [Gorm migration](https://gorm.io/docs/migration.html)
 
 - Add tests
 
-  - https://github.com/go-playground/validator
+  - [Test validations playground](https://github.com/go-playground/validator)
+
+- Add user authentication
+  - Add a login form
+  - Add a login button
+  - Display the user's information
+  - Display the number of clicks
+  - Add a logout button
+  - Related urls to the user
