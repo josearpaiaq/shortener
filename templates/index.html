@@ -57,8 +57,9 @@
 
           if (res.ok) {
             const a = document.createElement("a");
-            a.href = `/s/${data.short_url}`;
-            a.textContent = data.short_url;
+            const url = `/s/${data.short_url}`;
+            a.href = url;
+            a.textContent = url;
             a.target = "_blank";
             resultDiv.innerHTML = "Tu URL corta: ";
             resultDiv.appendChild(a);
