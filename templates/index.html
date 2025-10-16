@@ -52,11 +52,12 @@
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ url }),
           });
+
           const data = await res.json();
 
           if (res.ok) {
             const a = document.createElement("a");
-            a.href = data.short_url;
+            a.href = `/s/${data.short_url}`;
             a.textContent = data.short_url;
             a.target = "_blank";
             resultDiv.innerHTML = "Tu URL corta: ";
