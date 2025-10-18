@@ -7,7 +7,9 @@ RUN go mod download
 
 COPY . .
 
-RUN go build -o /app/app .
+RUN ls -la /app
+RUN go env && go version
+RUN go build -v -x -o /app/app .
 
 EXPOSE 8080
 
